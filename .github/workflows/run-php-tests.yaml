@@ -1,0 +1,26 @@
+name: "Run PHP Tests"
+
+on: [push]
+
+concurrency: ${{ github.ref }}
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions: ['7.4', '8.0', '8.1', '8.2']
+    name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+      - name: Setup composer
+        uses: php-actions/composer@v6
+        with:
+          php_version: ${{ matrix.php-versions }}
+          version: '2'
+          args: --optimize-autoloader
+      - name: Run tests
+        run: |
+          composer run test

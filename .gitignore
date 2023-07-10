@@ -1,0 +1,5 @@
+composer.phar
+/vendor/
+/tmp-genated-data/
+/.idea/
+/testfixtures_fixed/info.txt
